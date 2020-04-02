@@ -1,0 +1,88 @@
+﻿@model HBM.Areas.Dashboard.ViewModels.DebtsActionModel
+
+@if (Model != null)
+{
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @if (Model.ID > 0)
+                {
+                    <span>Edycja długu</span>
+                }
+                else
+                {
+                    <span>Dodawanie długu</span>
+                }
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="actionForm">
+                <input type="hidden" name="ID" value="@Model.ID" />
+                <div class="form-group">
+                    <label>Kategoria zadłużenia</label>
+                    <select class="form-control" name="KindOfDebtsID">
+                        @if (Model.KindOfDebts != null)
+                        {
+                            foreach (var kindOfDebts in Model.KindOfDebts)
+                            {
+                                <option value="@kindOfDebts.ID" @(kindOfDebts.ID == Model.KindOfDebtsID ? "selected" : string.Empty)>
+                                    @kindOfDebts.Name
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Nazwa zadłużenia</label>
+                    <textarea class="form-control" name="Name" placeholder="Wpisz nazwę długu">@Model.Name</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Dłużnik</label>
+                    <textarea class="form-control" name="DebtPerson" placeholder="Wpisz nazwę dłużnika">@Model.DebtPerson</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Podmiot egzekwujący dług</label>
+                    <textarea class="form-control" name="Executor" placeholder="Wpisz nazwę podmiotu egzekwującego dług">@Model.Executor</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Kwota zadłużenia</label>
+                    <textarea class="form-control" name="Price" placeholder="Wpisz kwotę długu">@Model.Price</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Data rozpoczęcia zadłużenia</label>
+                 
+                    <input type="date" class="form-control" name="Date" value="@Model.Date">
+                </div>
+            </form>
+            <div class="errorDiv">
+            </div>
+        </div>
+            <div class="modal-footer">
+                <button id="actionButton" type="button" class="btn btn-gradient-primary mr-2"><i class="mdi mdi-content-save"></i>Zapisz</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal"><i class="mdi mdi-close-circle"></i>Wyjdź</button>
+            </div>
+    </div>
+}
+<script>
+    $("#actionButton").click(function () {
+        $.ajax({
+            url: '@Url.Action("Action", "Debts")',
+            type: "post",
+            data: $("#actionForm").serialize()
+        })
+            .done(function (response) {
+                if (response.Success) {
+                    location.reload();
+                }
+                else {
+                    $(".errorDiv").html(response.Message)
+                }
+            })
+    });
+</script>
+
+
+

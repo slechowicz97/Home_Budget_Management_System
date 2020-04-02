@@ -1,0 +1,137 @@
+﻿@using HBM.Areas.Dashboard.ViewModels
+@model IndexViewModel
+<!-- partial -->
+@if (true)
+{
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-info card-img-holder text-white">
+                    <div class="card-body">
+
+                        <h4 class="font-weight-bolder mb-3">
+                            Twoje oszczędności <i class="mdi mdi-heart-box mdi-24x float-right"></i>
+                        </h4>
+                        <h2 class="mb-5">@Model.SavingsListingModel.AllSavings zł</h2>
+                        <h6 a href="@Url.Action("Index", "Savings")" class="card-text text-md-right">Zarządzaj</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white">
+                    <div class="card-body">
+                        <h4 class="font-weight-bolder mb-3">
+                            Twoje dostępne środki <i class="mdi mdi-cash-multiple mdi-24px float-right"></i>
+                        </h4>
+                        <h2 class="mb-5">@Model.BalanceListingModel.Incomes zł</h2>
+                        <h6 a href="@Url.Action("Index", "Transactions")" class="card-text text-md-right">Zarządzaj</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-danger card-img-holder text-white">
+                    <div class="card-body">
+                        <h4 class="font-weight-bolder mb-3">
+                            Suma wydatków w tym miesiącu<i class="mdi mdi-stack-overflow mdi-24px float-right"></i>
+                        </h4>
+                        <h2 class="mb-5">@Model.BalanceListingModel.Expenses zł</h2>
+                        <h6 a href="@Url.Action("Index", "Transactions")" class="card-text text-md-right">Zarządzaj</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-md-7 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Rozkład Twoich wydatków oraz przychodów w tym miesiącu</h4>
+                        <div class="justify-content-md-center">
+                            <img src="@Url.Action("DoughnutGraph", "Chart")" alt="Chart" />
+                        </div>
+                        <div class="row justify-content-md-center">
+                            <div class="col-6">
+                                <h4 class="card-title"><span class="btn btn-gradient-success">Twoje przychody: &emsp; @Model.BalanceListingModel.Incomes </span></h4>
+                            </div>
+                            <div class="col-6">
+                                <h4 class="card-title"><span class="btn btn-gradient-danger">Twoje wydatki: &emsp; @Model.BalanceListingModel.Expenses </span></h4>
+                            </div>
+
+                            <h4 class="card-title justify-content-center"><span class="btn btn-gradient-info">W tym wydatki na karcie kredytowej: &emsp; @Model.BalanceListingModel.DebtCardRemaning </span></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center">
+            <div class="col-10 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title">Twoje najbliższe długi oraz należności</h1>
+                        <div class="table-responsive">
+                            @{ Html.RenderPartial("_ListingDebts", Model.DebtsListingModel);}
+                        </div>
+                    </div>
+                    <div class="nav-item">
+                        <div class="row justify-content-md-center grid-margin">
+                            <a href="@Url.Action("Index", "Debts")" class="btn btn-gradient-primary mr-2 justify-content-md-center">
+                                <i class="mdi mdi-minus-circle menu-icon"></i>
+                                <span class="menu-title">Zarządzaj należnościami</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-10 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title">Twoje najbliższe zaplanowane transakcje</h1>
+                        <div class="table-responsive">
+                            @{ Html.RenderPartial("_ListingScheduledTransactions", Model.ScheduledTransactionsListingModel);}
+                        </div>
+                    </div>
+                    <div class="nav-item">
+                        <div class="row justify-content-md-center grid-margin">
+                            <a href="@Url.Action("Index", "ScheduledTransactions")" class="btn btn-gradient-primary mr-2 justify-content-md-center">
+                                <i class="mdi mdi-transfer-right menu-icon"></i>
+                                <span class="menu-title">Zarządzaj zaplanowanymi transakcjami</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-10 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title">Twoje najnowsze oszczędności</h1>
+                        <div class="table-responsive">
+                            @{ Html.RenderPartial("_ListingSavings", Model.SavingsListingModel);}
+                        </div>
+                    </div>
+                    <div class="nav-item">
+                        <div class="row justify-content-md-center grid-margin">
+                            <a href="@Url.Action("Index", "Savings")" class="btn btn-gradient-primary mr-2 justify-content-md-center">
+                                <i class="mdi mdi-heart-box menu-icon"></i>
+                                <span class="menu-title">Zarządzaj oszczędnościami</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright Sylwia Lechowicz © 2020. All rights reserved </span>
+                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Twoje finanse pod kontrolą <i class="mdi mdi-heart text-danger"></i></span>
+            </div>
+        </footer>
+        <!-- partial -->
+    </div>
+}

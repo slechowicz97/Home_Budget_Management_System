@@ -1,0 +1,84 @@
+﻿@model HBM.Areas.Dashboard.ViewModels.KindOfExpensesListingModel
+
+@if (Model != null && Model.KindOfExpenses != null && Model.KindOfExpenses.Count() > 0)
+{
+    <table id="categoryList"class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead>
+            <tr style="text-align: center;">
+                <th class="th-sm"><b> Rodzaj</b></th>
+                <th class="th-sm"><b> Nazwa kategorii</b></th>
+                <th class="th-sm"><b> Akcje </b></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var kindOfExpense in Model.KindOfExpenses)
+            {
+            <tr style="text-align: center;">
+                <td>
+                    @if (kindOfExpense.Kind != null)
+                    {
+                        @kindOfExpense.Kind.Name
+                    }
+                </td>
+                <td>
+                    @kindOfExpense.Category
+                </td>
+                <td>
+                    <button data-href="@Url.Action("Action", "KindOfExpenses", new { ID = kindOfExpense.ID})" type="button" class="data-btn btn btn-gradient-success btn-rounded btn-fw" data-toggle="modal" data-target="#actionModal">Edytuj</button>
+                    <button data-href="@Url.Action("Delete", "KindOfExpenses", new { ID = kindOfExpense.ID})" type="button" class="data-btn btn btn-gradient-danger btn-rounded btn-fw" data-toggle="modal" data-target="#actionModal">Usuń</button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    if (Model.Pager.EndPage > 1)
+    {
+        <nav>
+            <ul class="pagination">
+                @if (Model.Pager.CurrentPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", "KindOfExpenses")">
+                            <i class="mdi mdi-chevron-double-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", "KindOfExpenses", new { page = Model.Pager.CurrentPage - 1, searchTerm = Model.SearchTerm, kindsID = Model.KindsID })">
+                            <i class="mdi mdi-chevron-left"></i>
+                        </a>
+                    </li>
+                }
+
+                @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+                {
+                    <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", "KindOfExpenses", new { page = page, searchTerm = Model.SearchTerm, kindsID = Model.KindsID })">@page</a>
+                    </li>
+                }
+
+                @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", "KindOfExpenses", new { page = Model.Pager.CurrentPage + 1, searchTerm = Model.SearchTerm, kindsID = Model.KindsID })">
+                            <i class="mdi mdi-chevron-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", "KindOfExpenses", new { page = Model.Pager.TotalPages, searchTerm = Model.SearchTerm, kindsID = Model.KindsID })">
+                            <i class="mdi mdi-chevron-double-right"></i>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+
+}
+
+else
+{
+<div class="alert alert-danger" role="alert">
+    Brak danych w tabeli!
+</div>
+}

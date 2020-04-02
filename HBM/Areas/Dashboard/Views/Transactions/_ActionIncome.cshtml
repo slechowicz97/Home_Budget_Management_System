@@ -1,0 +1,93 @@
+﻿@model HBM.Areas.Dashboard.ViewModels.TransactionActionModel
+
+@if (Model != null)
+{
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @if (Model.ID > 0)
+                {
+                    <span>Edycja transakcji przychodu</span>
+                }
+                else
+                {
+                    <span>Dodawanie transakcji przychodu</span>
+                }
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="actionForm">
+                <input type="hidden" name="ID" value="@Model.ID" />
+                <div class="form-group">
+                    <label>Kategoria transakcji</label>
+                    <select class="form-control" name="BudgetsID">
+                        @if (Model.Budgets != null)
+                        {
+                            foreach (var budgets in Model.Budgets)
+                            {
+                                if (budgets.KBudgetID == 1)
+                                {
+                                    <option value="@budgets.ID" @(budgets.ID == Model.BudgetsID ? "selected" : string.Empty)>
+                                        @budgets.Name
+                                    </option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Nazwa transakcji</label>
+                    <textarea class="form-control" name="TransactionName" placeholder="Wpisz nazwę transakcji">@Model.TransactionName</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Kwota</label>
+                    <textarea class="form-control" name="Price" placeholder="Wpisz kwotę transakcji">@Model.Price </textarea>
+                </div>
+                <div class="form-group">
+                    <label>Froma przychodu</label>
+                    <select class="form-control" name="BudgetsName">
+                        <option value="Gotówka">Gotówka</option>
+                        <option value="Karta">Karta</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Data transakcji</label>
+                    <input type="date" class="form-control" name="Date" value="@Model.Date">
+                </div>
+            </form>
+        </div>
+        <div class="errorDiv">
+        </div>
+
+        <div class="modal-footer">
+            <button id="actionButton" type="button" class="btn btn-gradient-primary mr-2"><i class="mdi mdi-content-save"></i>Zapisz</button>
+            <button type="button" class="btn btn-light" data-dismiss="modal"><i class="mdi mdi-close-circle"></i>Wyjdź</button>
+        </div>
+
+    </div>
+}
+<script>
+    $("#actionButton").click(function () {
+        $.ajax({
+            url: '@Url.Action("ActionIncome", "Transactions")',
+            type: "post",
+            data: $("#actionForm").serialize()
+        })
+            .done(function (response) {
+                if (response.Success) {
+                    location.reload();
+                }
+                else {
+                    $(".errorDiv").html(response.Message)
+                }
+            })
+    });
+</script>
+
+
+
+
+

@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Money$ - Twoje finanse pod kontrolą</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/Areas/Dashboard/Content/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/Areas/Dashboard/Content/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="~/Areas/Dashboard/Content/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="~/Areas/Dashboard/Content/images/favicon.png" />
+    <script src="~/Areas/Dashboard/Content/vendors/js/vendor.bundle.base.js"></script>
+</head>
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row bg-white">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center">
+                <a class="navbar-brand" href="@Url.Action("Index", "Dashboard")"><img src="~/Areas/Dashboard/Content/images/LogoKopia.svg" alt="logo" /></a></div>
+            <div class="navbar-menu-wrapper d-flex align-items-stretch">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item nav-profile dropdown">
+                        <div id="page-content-wrapper">
+                            <nav class="navbar navbar-expand-lg navbar-white ">
+                                <button class="btn btn-primary" id="menu-toggle">
+                                    <i class="fas fa-bars"></i>
+                                    Twoje finanse pod kontrolą <i class="mdi mdi-heart text-danger"></i>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                                        <li class="nav-item active">
+                                            <a class="nav-link" href="~/Account/Login">
+                                                <i class="mdi mdi-logout mr-2 text-primary"></i> Logout
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+
+                        </div>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <div class="nav-item">
+                    <a class="list-group-item list-group-item-action bg-white" href="@Url.Action("Index", "Dashboard")">
+                        <i class="mdi mdi-home menu-icon"></i>
+                        <span class="menu-title">Strona główna</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="@Url.Action("Index", "Transactions")" class="list-group-item list-group-item-action bg-white">
+                        <i class="mdi mdi-cash-multiple menu-icon"></i>
+                        <span class="menu-title">Moje finanse</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="@Url.Action("Index", "Budget")" class="list-group-item list-group-item-action bg-white">
+                        <i class="mdi mdi-transfer-right menu-icon"></i>
+                        <span class="menu-title">Zarządzanie kategoriami</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="@Url.Action("Index", "Balance")" class="list-group-item list-group-item-action bg-white">
+                        <i class="mdi mdi-contacts mr-1"></i>
+                        <span class="menu-title">Bilans</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="@Url.Action("Index", "Savings")" class="list-group-item list-group-item-action bg-white">
+                        <i class="mdi mdi-heart-box menu-icon"></i>
+                        <span class="menu-title">Moje oszczędności</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="@Url.Action("Index", "ScheduledTransactions")" class="list-group-item list-group-item-action bg-white">
+                        <i class="mdi mdi-transfer-right menu-icon"></i>
+                        <span class="menu-title">Zaplanowane transakcje</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="@Url.Action("Index", "Debts")" class="list-group-item list-group-item-action bg-white">
+                        <i class="mdi mdi-minus-circle menu-icon"></i>
+                        <span class="menu-title">Długi</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="@Url.Action("Index", "ImportantShopping")" class="list-group-item list-group-item-action bg-white">
+                        <i class="mdi mdi-shopping menu-icon"></i>
+                        <span class="menu-title">Ważne zakupy</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="@Url.Action("Index", "Notifications")" class="list-group-item list-group-item-action bg-white" href="pages/tables/basic-table.html">
+                        <i class="mdi mdi-note-text menu-icon"></i>
+                        <span class="menu-title">Zarządzanie przypomnieniami</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="@Url.Action("Index", "DebtCards")" class="list-group-item list-group-item-action bg-white">
+                        <i class="mdi mdi-credit-card menu-icon"></i>
+                        <span class="menu-title">Karta kredytowa</span>
+                    </a>
+                </div>
+            </nav>
+                    
+            <!-- content-wrapper ends -->
+            <div class="container-fluid mt-2">
+                @RenderBody()
+            </div>
+            <!-- partial -->
+        </div>
+
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+        @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+   
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="~/Areas/Dashboard/Content/vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="~/Areas/Dashboard/Content/js/off-canvas.js"></script>
+    <script src="~/Areas/Dashboard/Content/js/hoverable-collapse.js"></script>
+    <script src="~/Areas/Dashboard/Content/js/misc.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="~/Areas/Dashboard/Content/js/dashboard.js"></script>
+    <script src="~/Areas/Dashboard/Content/js/todolist.js"></script>
+    <!-- End custom js for this page -->
+    <!-- /#sidebar-wrapper -->
+    <!-- Page Content -->
+    <!-- /#page-content-wrapper -->
+
+
+    <!-- Menu Toggle Script -->
+ 
+
+</body>
+
+</html>

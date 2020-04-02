@@ -1,0 +1,58 @@
+﻿@model HBM.Areas.Dashboard.ViewModels.ScheduledTransactionsListingModel
+@if (Model != null && Model.ScheduledTransactions != null && Model.ScheduledTransactions.Count() > 0)
+{    
+    int valueCompare = 0, count = 0;
+    System.DateTime currentlyData = System.DateTime.Now;
+    <table id="categoryList" class="table table-striped table-bordered table-sm" cellspacing="0" cellpadding="1" width="100%">
+        <thead>
+            <tr style="text-align: center;">
+                <th class="th-sm"><b> Nazwa transakcji</b></th>
+                <th class="th-sm"><b> Nazwa odbiorcy</b></th>
+                <th class="th-sm"><b> Kwota</b></th>
+                <th class="th-sm"><b> Data realizacji</b></th>
+                <th class="th-sm"><b> Akcje </b></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var scheduledTransaction in Model.ScheduledTransactions)
+            {
+                string format;
+                 format = String.Format("{0:0.00}", @scheduledTransaction.Price);
+                valueCompare = DateTime.Compare(currentlyData, scheduledTransaction.Data);
+                if (valueCompare <= 0)
+                {
+            <tr style="text-align: center;">
+                <td>
+                    @scheduledTransaction.TransactionName
+                </td>
+                <td>
+                    @scheduledTransaction.Recipient
+                </td>
+                <td>
+                    @format PLN
+                </td>
+                <td>
+                    @scheduledTransaction.Data.ToShortDateString()
+                </td>
+                <td>
+                    <button data-href="@Url.Action("Action", "ScheduledTransactions", new { ID = scheduledTransaction.ID })" type="button" class="data-btn btn btn-gradient-success btn-rounded btn-fw" data-toggle="modal" data-target="#actionModal">Edytuj</button>
+                    <button data-href="@Url.Action("Delete", "ScheduledTransactions", new { ID = scheduledTransaction.ID })" type="button" class="data-btn btn btn-gradient-danger btn-rounded btn-fw" data-toggle="modal" data-target="#actionModal">Usuń</button>
+                </td>
+            </tr>
+                }
+                else
+                {
+                    count += 1;
+                }
+            }
+        </tbody>
+    </table>
+}
+
+else
+{
+    <div class="alert alert-danger" role="alert">
+        Brak danych w tabeli!
+    </div>
+}
+

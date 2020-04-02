@@ -1,0 +1,37 @@
+﻿@model HBM.Areas.Dashboard.ViewModels.KindOfDebtsListingModel
+
+@if (Model != null && Model.KindOfDebts != null && Model.KindOfDebts.Count() > 0)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr style="text-align: center;">
+                <th><b> Nazwa kategorii</b></th>
+                <th><b> Actions </b></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var kindsOfDebts in Model.KindOfDebts)
+            {
+                <tr style="text-align: center;">
+                    <td>
+                        @kindsOfDebts.Name
+                    </td>
+                    <td>
+                        <button data-href="@Url.Action("Action", "KindOfDebts", new { ID = kindsOfDebts.ID})" type="button" class="data-btn btn btn-gradient-success btn-rounded btn-fw" data-toggle="modal" data-target="#actionModal">Edytuj</button>
+                        <button data-href="@Url.Action("Delete", "KindOfDebts", new { ID = kindsOfDebts.ID})" type="button" class="data-btn btn btn-gradient-danger btn-rounded btn-fw" data-toggle="modal" data-target="#actionModal">Usuń</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+else
+{
+    <div class="alert alert-danger" role="alert">
+        Brak danych w tabeli!
+    </div>
+}
+
+

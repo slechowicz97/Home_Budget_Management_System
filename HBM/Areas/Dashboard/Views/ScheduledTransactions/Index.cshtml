@@ -1,0 +1,64 @@
+﻿@model HBM.Areas.Dashboard.ViewModels.ScheduledTransactionsListingModel
+@{
+    ViewBag.Title = "Index";
+}
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Zaplanowane Transakcje</h2>
+                <h5 class="card-description">
+                    W tym miejscu możesz dodawać, usuwać, eytować, a także przeglądać Twoje zaplanowane transakcje
+                </h5>
+                <form>
+                    <div class="input-group">
+                        <input type="text" name="searchterm" class="form-control" placeholder="Tu wpisz szukaną nazwę odbiorcy..." value="@Model.SearchTerm">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" type="submit"><i class="mdi mdi-magnify"></i>Szukaj</button>
+                            <div class="col"></div>
+                            <button data-href="@Url.Action("Action", "ScheduledTransactions")" class="data-btn btn btn-outline-primary" type="button" data-toggle="modal" data-target="#actionModal">Utwórz nową</button>
+                            <a class="btn btn-outline-primary" href="@Url.Action("Index", "ScheduledTransactions")">Wyświetl wszystko</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col col-lg-12">
+                    @{ Html.RenderPartial("_Listing", Model);}
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    </div>
+</div>
+<script>
+    $(".data-btn").click(function () {
+        $.ajax({
+            url: $(this).attr("data-href"),
+        })
+            .done(function (response) {
+                $("#actionModal .modal-dialog").html(response);
+            })
+    });
+</script>
+<script>
+    $("#actionButton").click(function () {
+        $.ajax({
+            url: '@Url.Action("Delete", "ScheduledTransactions")',
+            type: "post",
+            data: $("#actionForm").serialize()
+        })
+            .done(function (response) {
+                if (response.Success) {
+                    location.reload();
+                }
+                else {
+                    $(".errorDiv").html(response.Message)
+                }
+            })
+    });
+</script>
+

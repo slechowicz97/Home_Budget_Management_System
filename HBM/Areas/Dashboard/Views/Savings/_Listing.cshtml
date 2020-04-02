@@ -1,0 +1,110 @@
+﻿@model HBM.Areas.Dashboard.ViewModels.SavingsListingModel
+
+@if (Model != null && Model.Savings != null && Model.Savings.Count() > 0)
+{
+    <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead>
+            <tr style="text-align: center;">
+                <th class="th-sm"><b> Typ</b></th>
+                <th class="th-sm"><b> Nazwa oszczędności</b></th>
+                <th class="th-sm"><b> Kwota</b></th>
+                <th class="th-sm"><b> Data</b></th>
+                <th class="th-sm"><b> Akcje </b></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var savings in Model.Savings)
+            {
+                <tr style="text-align: center;">
+                     <td>
+                        @savings.Type
+                    </td>
+                    <td>
+                        @savings.Name
+                    </td>
+                    <td>
+                        @savings.Price @savings.Currency
+                    </td>
+                    <td>
+                        @savings.DateEnd.ToShortDateString()
+                    </td>
+                    <td>
+                        <button data-href="@Url.Action("Action", "Savings", new { ID = savings.ID})" type="button" class="data-btn btn btn-gradient-success btn-rounded btn-fw" data-toggle="modal" data-target="#actionModal">Edytuj</button>
+                        <button data-href="@Url.Action("Delete", "Savings", new { ID = savings.ID})" type="button" class="data-btn btn btn-gradient-danger btn-rounded btn-fw" data-toggle="modal" data-target="#actionModal">Usuń</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    if (Model.Pager.EndPage > 1)
+    {
+        <nav>
+            <ul class="pagination">
+                @if (Model.Pager.CurrentPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", "Savings")">
+                            <i class="mdi mdi-chevron-double-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", "Savings", new { page = Model.Pager.CurrentPage - 1, searchTerm = Model.SearchTerm })">
+                            <i class="mdi mdi-chevron-left"></i>
+                        </a>
+                    </li>
+                }
+
+                @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+                {
+                    <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", "Savings", new { page = page, searchTerm = Model.SearchTerm})">@page</a>
+                    </li>
+                }
+
+                @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", "Savings", new { page = Model.Pager.CurrentPage + 1, searchTerm = Model.SearchTerm })">
+                            <i class="mdi mdi-chevron-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", "Savings", new { page = Model.Pager.TotalPages, searchTerm = Model.SearchTerm})">
+                            <i class="mdi mdi-chevron-double-right"></i>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+
+}
+
+else
+{
+    <div class="alert alert-danger" role="alert">
+        Brak danych w tabeli!
+    </div>
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('#checkBox').change(function () {
+            if ($(this).is(':checked')) {
+                $.ajax({
+                    url: '@Url.Action("Delete", "Savings")',
+                    type: "post",
+                    data: $("#actionForm").serialize()
+                })
+                    .done(function (response) {
+                        if (response.Success) {
+                            location.reload();
+                        }
+                        else {
+                            $(".errorDiv").html(response.Message)
+                        }
+                    })
+            }
+        })});
+</script>

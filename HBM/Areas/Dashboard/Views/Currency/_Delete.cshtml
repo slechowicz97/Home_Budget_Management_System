@@ -1,0 +1,48 @@
+﻿@model HBM.Areas.Dashboard.ViewModels.CurrencyActionModel
+
+@if (Model != null)
+{
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                <span>Usuwanie waluty</span>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="actionForm">
+                <input type="hidden" name="ID" value="@Model.ID" />
+            </form>
+            <div class="alert alert-danger" role="alert">
+                Czy napewno chcesz usunąć walutę?
+            </div>
+            <div class="errorDiv">
+            </div>
+            <div class="modal-footer">
+                <button id="actionButton" type="button" class="btn btn-gradient-primary mr-2"><i class="mdi mdi-bitbucket mr-1"></i>Usuń</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal"><i class="mdi mdi-close-circle"></i>Anuluj</button>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $("#actionButton").click(function () {
+        $.ajax({
+            url: '@Url.Action("Delete", "Currency")',
+            type: "post",
+            data: $("#actionForm").serialize()
+        })
+            .done(function (response) {
+                if (response.Success) {
+                    location.reload();
+                }
+                else {
+                    $(".errorDiv").html(response.Message)
+                }
+            })
+    });
+</script>
+
+

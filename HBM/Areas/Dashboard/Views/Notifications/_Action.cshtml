@@ -1,0 +1,66 @@
+﻿@model HBM.Areas.Dashboard.ViewModels.NotificationsActionModel
+
+@if (Model != null)
+{
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @if (Model.ID > 0)
+                {
+                    <span>Edycja przypomnienia</span>
+                }
+                else
+                {
+                    <span>Dodawanie przypomnienia</span>
+                }
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="actionForm">
+                <input type="hidden" name="ID" value="@Model.ID" />
+                <div class="form-group">
+                    <label>Nazwa zadłużenia</label>
+                    <textarea class="form-control" name="Name" placeholder="Wpisz nazwę przypomnienia">@Model.Name</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Treść</label>
+                    <textarea class="form-control" name="Content" placeholder="Wpisz treść">@Model.Content</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Data przypomnienia (dd.mm.yyy hh::mm::ss)</label>
+                    <textarea class="form-control" name="Date" placeholder="Wpisz treść">@Model.Date</textarea>
+                </div>
+            </form>
+            <div class="errorDiv">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="actionButton" type="button" class="btn btn-gradient-primary mr-2"><i class="mdi mdi-content-save"></i>Zapisz</button>
+            <button type="button" class="btn btn-light" data-dismiss="modal"><i class="mdi mdi-close-circle"></i>Wyjdź</button>
+        </div>
+    </div>
+}
+<script>
+    $("#actionButton").click(function () {
+        $.ajax({
+            url: '@Url.Action("Action", "Notifications")',
+            type: "post",
+            data: $("#actionForm").serialize()
+        })
+            .done(function (response) {
+                if (response.Success) {
+                    location.reload();
+                }
+                else {
+                    $(".errorDiv").html(response.Message)
+                }
+            })
+    });
+</script>
+
+
+
+

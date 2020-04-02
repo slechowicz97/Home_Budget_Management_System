@@ -1,0 +1,70 @@
+﻿@model HBM.Areas.Dashboard.ViewModels.DebtsListingModel
+@{
+    ViewBag.Title = "Index";
+}
+
+ <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Moje należności i długi</h2>
+                <h5 class="card-description">
+                    W tym miejscu możesz dodawać, usuwać, eytować, a także przeglądać Twoje długi oraz należności.
+                </h5>
+            </div>
+        </div>
+</div>
+    <div class="row mb-3">
+        <div class="col col-lg-12">
+            <form>
+                <div class="input-group">
+                    <input type="text" name="searchterm" class="form-control" placeholder="Tu wpisz szukaną nazwę długu..." value="@Model.SearchTerm">
+
+                    @if (Model.KindOfDebts != null && Model.KindOfDebts.Count() > 0)
+                    {
+                        <select name="kindsOfDebtsID" class="form-control">
+                            <option value="0">
+                                Wybierz typ
+                            </option>
+                            @foreach (var kindOfDebts in Model.KindOfDebts)
+                            {
+                                <option value="@kindOfDebts.ID" @(kindOfDebts.ID == Model.KindOfDebtsID ? "selected" : string.Empty)>
+                                    @kindOfDebts.Name
+                                </option>
+                            }
+                        </select>
+                    }
+
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="submit"><i class="mdi mdi-magnify"></i>Szukaj</button>
+                        <div class="col"></div>
+                        <button data-href="@Url.Action("Action", "Debts")" class="data-btn btn btn-outline-primary" type="button" data-toggle="modal" data-target="#actionModal">Utwórz nowy</button>
+                        <a class="btn btn-outline-primary" href="@Url.Action("Index", "Debts")">Wyświetl wszystko</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<div class="row">
+            <div class="col col-lg-12">
+                @{ Html.RenderPartial("_Listing", Model);}
+            </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    </div>
+</div>
+<script>
+    $(".data-btn").click(function () {
+        $.ajax({
+            url: $(this).attr("data-href"),
+        })
+            .done(function (response) {
+                $("#actionModal .modal-dialog").html(response);
+            })
+    });
+</script>
