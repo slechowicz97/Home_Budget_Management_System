@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HBM.Data", "HBM.Data\HBM.Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HBM.Services", "HBM.Services\HBM.Services.csproj", "{F80435D5-C4FD-427F-9A65-A9046632EB1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HBM.UnitTests", "HBM.UnitTests\HBM.UnitTests.csproj", "{3F4751DF-2EF9-465A-9DFF-6D20FB9FE702}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{F80435D5-C4FD-427F-9A65-A9046632EB1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F80435D5-C4FD-427F-9A65-A9046632EB1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F80435D5-C4FD-427F-9A65-A9046632EB1A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3F4751DF-2EF9-465A-9DFF-6D20FB9FE702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F4751DF-2EF9-465A-9DFF-6D20FB9FE702}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F4751DF-2EF9-465A-9DFF-6D20FB9FE702}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F4751DF-2EF9-465A-9DFF-6D20FB9FE702}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
